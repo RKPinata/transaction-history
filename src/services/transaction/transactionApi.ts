@@ -8,7 +8,11 @@ const simulateDelay = () => {
 
 const getTransactionHistory = async () => {
   await simulateDelay();
-  const response = mockTransactionHistory;
+  const response = {
+    data: mockTransactionHistory,
+  };
 
   return response;
 };
+
+export { getTransactionHistory };

@@ -46,4 +46,4 @@ const COLORS = {
   "overlay-dark": "#333333",
 } as const;
 
-export { COLORS };
+export { COLORS};
