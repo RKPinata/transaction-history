@@ -1,4 +1,4 @@
-export type TransactionType = "transfer" | "receive" | "payment";
+export type TransactionType = "send" | "receive" | "payment";
 
 export type Transaction = {
   amount: number;
