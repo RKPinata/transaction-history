@@ -1,8 +1,9 @@
 import { COLORS } from "@root/constants";
 import { TransactionList } from "@components/transactions";
 import { router, Stack } from "expo-router";
-import { View, Text, SafeAreaView, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useRef } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +22,7 @@ const Transactions = () => {
     <View style={styles.container}>
       <Stack.Screen
         options={{
+          gestureEnabled: false,
           headerShown: false,
         }}
       />

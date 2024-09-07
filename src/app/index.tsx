@@ -16,12 +16,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-
 });
 
 const HomePage: React.FC = () => {
   
-
   return (
     <ImageBackground source={splashImage} style={styles.container}>
       <Stack.Screen
