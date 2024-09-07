@@ -1,7 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { router } from "expo-router";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import Entypo from "@expo/vector-icons/Entypo";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Transaction } from "@root/models";
 import { formatDate } from "@root/utils/format";
@@ -13,17 +14,28 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection: "row",
   },
+  rightContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  amountContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  eyeIcon: {
+    marginRight: 8,
+  },
 });
 
 type TransactionListItemProps = {
   transaction: Transaction;
-  showAmount: boolean;
 };
 
 const TransactionListItem: React.FC<TransactionListItemProps> = ({
   transaction,
-  showAmount,
 }) => {
+  const [showAmount, setShowAmount] = useState<boolean>(false);
+
   const setTransactionDetail = useTransactionStore(
     (state) => state.setTransactionDetail
   );
@@ -39,7 +51,7 @@ const TransactionListItem: React.FC<TransactionListItemProps> = ({
   } = transaction;
 
   const formattedDate = formatDate(date);
-  const resipient = transferFrom || transferTo || merchant;
+  const recipient = transferFrom || transferTo || merchant;
 
   const handleShowTransactionDetail = () => {
     setTransactionDetail(transaction);
@@ -52,6 +64,19 @@ const TransactionListItem: React.FC<TransactionListItemProps> = ({
     }
     return <Text>****</Text>;
   }, [amount, showAmount]);
+
+  const renderShowAmountIcon: React.JSX.Element = useMemo(() => {
+    if (showAmount) {
+      return <Entypo name="eye" size={24} color={COLORS["content-primary"]} />;
+    }
+    return (
+      <Entypo
+        name="eye-with-line"
+        size={24}
+        color={COLORS["content-primary"]}
+      />
+    );
+  }, []);
 
   const renderIcon: React.JSX.Element = useMemo(() => {
     switch (type) {
@@ -72,7 +97,7 @@ const TransactionListItem: React.FC<TransactionListItemProps> = ({
           />
         );
       default:
-        return <SimpleLineIcons name="credit-card" size={24} color="" />;
+        return <SimpleLineIcons name="credit-card" size={24} />;
     }
   }, [type]);
 
@@ -82,9 +107,24 @@ const TransactionListItem: React.FC<TransactionListItemProps> = ({
       <View>
         <Text>{formattedDate}</Text>
         <Text>{description}</Text>
-        <Text>{resipient}</Text>
+        <Text>{recipient}</Text>
       </View>
-      {renderAmount}
+      <View style={styles.rightContent}>
+        <View style={styles.amountContainer}>
+          <Pressable
+            style={styles.eyeIcon}
+            onPress={() => setShowAmount(!showAmount)}
+          >
+            {renderShowAmountIcon}
+          </Pressable>
+          {renderAmount}
+        </View>
+        <Entypo
+          name="chevron-right"
+          size={24}
+          color={COLORS["content-primary"]}
+        />
+      </View>
     </Pressable>
   );
 };

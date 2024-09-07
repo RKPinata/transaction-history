@@ -30,7 +30,6 @@ const Transactions = () => {
         <View style={styles.title}>
           <Text>Transactions</Text>
         </View>
-
         <TransactionList />
       </SafeAreaView>
     </View>

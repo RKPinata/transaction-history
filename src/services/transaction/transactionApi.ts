@@ -18,7 +18,7 @@ const getTransactionHistory = async () => {
   await simulateDelay();
 
   try {
-    simulateError();
+    // simulateError();
     const response = {
       data: mockTransactionHistory,
       error: null,
