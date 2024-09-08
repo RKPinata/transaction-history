@@ -1,8 +1,15 @@
 import { router, Stack } from "expo-router";
 import { COLORS } from "@constants/colors";
 import splashImage from "@assets/splash-image.png";
+import * as LocalAuthentication from "expo-local-authentication";
 
-import { Text, StyleSheet, Pressable, ImageBackground } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  Pressable,
+  ImageBackground,
+  Alert,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const styles = StyleSheet.create({
@@ -29,6 +36,17 @@ const styles = StyleSheet.create({
 });
 
 const HomePage: React.FC = () => {
+  const handleLogin = async () => {
+
+    const { success } = await LocalAuthentication.authenticateAsync();
+
+    if (success) {
+      router.push("transactions");
+    } else {
+      Alert.alert("Authentication Failed");
+    }
+  };
+
   return (
     <ImageBackground source={splashImage} style={styles.container}>
       <Stack.Screen
@@ -37,12 +55,7 @@ const HomePage: React.FC = () => {
         }}
       />
       <SafeAreaView>
-        <Pressable
-          style={styles.cta}
-          onPress={() => {
-            router.push("transactions");
-          }}
-        >
+        <Pressable style={styles.cta} onPress={handleLogin}>
           <Text style={styles.ctaText}>View{"\n"}Transactions</Text>
         </Pressable>
       </SafeAreaView>
