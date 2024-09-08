@@ -1,6 +1,5 @@
 import { COLORS } from "@root/constants";
 import { Stack } from "expo-router/stack";
-import { useColorScheme, View } from "react-native";
 import { RootSiblingParent } from "react-native-root-siblings";
 
 

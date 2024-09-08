@@ -1,9 +1,8 @@
+import { router, Stack } from "expo-router";
+import { Text, Pressable, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@root/constants";
 import { TransactionList } from "@components/transactions";
-import { router, Stack } from "expo-router";
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import { useRef } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const styles = StyleSheet.create({
   container: {
