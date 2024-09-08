@@ -10,6 +10,7 @@ import { useTransactionStore } from "@store/transactionStore";
 import { COLORS } from "@root/constants";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { contentStyles, styles } from "./TransactionListItem.styles";
+import { authenticateUser } from "@root/utils";
 
 type TransactionListItemProps = {
   transaction: Transaction;
@@ -44,7 +45,7 @@ const TransactionListItem: React.FC<TransactionListItemProps> = ({
 
   const handleShowAmount = async () => {
      if (!showAmount) {
-      const { success } = await LocalAuthentication.authenticateAsync({});
+      const { success } = await authenticateUser();
       
       if (success) {
         setShowAmount(true);
