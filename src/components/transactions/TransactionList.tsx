@@ -1,18 +1,11 @@
 import { COLORS } from "@root/constants";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  ScrollView,
-  RefreshControl,
-  FlatList,
-} from "react-native";
+import { View, Text, StyleSheet, RefreshControl, FlatList } from "react-native";
 import { TransactionListItem } from "./TransactionListItem";
 import { useEffect, useMemo, useState } from "react";
 import { getTransactionHistory } from "@services/transaction";
 import { Transaction } from "@root/models";
 import Toast from "react-native-root-toast";
+import { Flow } from "react-native-animated-spinkit";
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -26,6 +19,11 @@ const styles = StyleSheet.create({
   listItemSeparator: {
     height: 1,
     backgroundColor: COLORS["border-primary"],
+  },
+  emptyListLoading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   emptyList: {
     flex: 1,
@@ -75,7 +73,6 @@ const TransactionList = ({}) => {
         fontWeight: "bold",
         color: COLORS["content-primary"],
       },
-
       animation: true,
       hideOnPress: true,
       delay: 0,
@@ -87,7 +84,13 @@ const TransactionList = ({}) => {
   }, []);
 
   const renderEmptyList = useMemo(() => {
-    if (isLoading) return null;
+    if (isLoading)
+      return (
+        <View style={styles.emptyListLoading}>
+          <Flow size={48} color={COLORS["content-accent"]}></Flow>
+        </View>
+      );
+
     return (
       <View style={styles.emptyList}>
         <Text style={styles.emptyListText}>No transactions found</Text>
@@ -99,14 +102,18 @@ const TransactionList = ({}) => {
     <>
       <FlatList
         style={styles.listContainer}
+        contentContainerStyle={{ flexGrow: 1 }}
         data={transactions}
         keyExtractor={(item) => item.transactionId}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl
+            refreshing={transactions.length > 0 ? refreshing : false}
+            onRefresh={onRefresh}
+          />
         }
         renderItem={({ item }) => <TransactionListItem transaction={item} />}
         ItemSeparatorComponent={() => <View style={styles.listItemSeparator} />}
-        ListEmptyComponent={() => renderEmptyList}
+        ListEmptyComponent={renderEmptyList}
       />
     </>
   );
