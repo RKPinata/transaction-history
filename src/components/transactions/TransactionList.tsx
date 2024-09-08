@@ -19,6 +19,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS["background-primary"],
     borderRadius: 16,
+    borderWidth: 1,
+    borderColor: COLORS["border-primary"],
     minHeight: 400,
   },
   listItemSeparator: {

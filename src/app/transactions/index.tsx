@@ -11,28 +11,42 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   title: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS["border-primary"],
+    fontSize: 28,
+    fontWeight: "bold",
+    paddingVertical: 32,
   },
 });
 
 const Transactions = () => {
   return (
-    <View style={styles.container}>
+    <>
       <Stack.Screen
         options={{
           gestureEnabled: false,
-          headerShown: false,
+          headerBackVisible: false,
+          headerTitle: "",
+          headerStyle: {
+            backgroundColor: COLORS["content-accent"],
+          },
+          headerRight: () => (
+            <Pressable
+              onPress={() => {
+                router.back();
+              }}
+            >
+              <Text style={{ fontWeight: "bold" }}>Logout</Text>
+            </Pressable>
+          ),
         }}
       />
-      <SafeAreaView>
-        <View style={styles.title}>
-          <Text>Transactions</Text>
-        </View>
+      <SafeAreaView
+        style={styles.container}
+        edges={["bottom", "left", "right"]}
+      >
+        <Text style={styles.title}>Transactions</Text>
         <TransactionList />
       </SafeAreaView>
-    </View>
+    </>
   );
 };
 export default Transactions;
