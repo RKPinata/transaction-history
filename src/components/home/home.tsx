@@ -1,7 +1,7 @@
+import * as LocalAuthentication from "expo-local-authentication";
 import { router, Stack } from "expo-router";
 import { COLORS } from "@constants/colors";
 import splashImage from "@assets/splash-image.png";
-import * as LocalAuthentication from "expo-local-authentication";
 
 import {
   Text,
