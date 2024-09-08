@@ -12,9 +12,28 @@ const styles = StyleSheet.create({
   listItem: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 8,
+    paddingVertical: 16,
     borderBottomWidth: 1,
     borderBottomColor: COLORS["border-primary"],
+  },
+  listItemTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+color: COLORS["content-secondary"],
+  },
+  listItemDescription: {
+    fontSize: 16,
+  },
+  amount: {
+    fontSize: 28,
+    fontWeight: "bold",
+    paddingVertical: 16,
+  },
+  amountPlus: {
+    color: COLORS["content-positive"],
+  },
+  amountMinus: {
+    color: COLORS["content-negative"],
   },
 });
 
@@ -52,8 +71,8 @@ const TransactionDetails = () => {
   }) => {
     return (
       <View style={styles.listItem}>
-        <Text>{title}</Text>
-        <Text>{description}</Text>
+        <Text style={styles.listItemTitle}>{title}</Text>
+        <Text style={styles.listItemDescription}>{description}</Text>
       </View>
     );
   };
@@ -64,10 +83,24 @@ const TransactionDetails = () => {
         <Stack.Screen
           options={{
             headerTitle: "Transaction Details",
+            headerStyle: {
+              backgroundColor: COLORS["content-accent"],
+            },
             headerBackTitleVisible: false,
           }}
         />
-        <Text>{transactionDetail.amount}</Text>
+        <Text
+          style={[
+            styles.amount,
+            transactionDetail.amount > 0
+              ? styles.amountPlus
+              : styles.amountMinus,
+          ]}
+        >
+          {transactionDetail.amount > 0
+            ? `+${transactionDetail.amount}`
+            : transactionDetail.amount}
+        </Text>
         {renderListItem({
           title: "Transaction Type",
           description: transactionDetail.type,
