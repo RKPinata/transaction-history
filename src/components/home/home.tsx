@@ -11,6 +11,7 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { authenticateUser } from "@root/utils/";
 
 const styles = StyleSheet.create({
   container: {
@@ -37,8 +38,7 @@ const styles = StyleSheet.create({
 
 const HomePage: React.FC = () => {
   const handleLogin = async () => {
-
-    const { success } = await LocalAuthentication.authenticateAsync();
+    const { success } = await authenticateUser()
 
     if (success) {
       router.push("transactions");
