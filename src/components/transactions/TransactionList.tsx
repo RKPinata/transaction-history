@@ -12,7 +12,7 @@ import { TransactionListItem } from "./TransactionListItem";
 import { useEffect, useMemo, useState } from "react";
 import { getTransactionHistory } from "@services/transaction";
 import { Transaction } from "@root/models";
-import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-root-toast";
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -26,6 +26,16 @@ const styles = StyleSheet.create({
   listItemSeparator: {
     height: 1,
     backgroundColor: COLORS["border-primary"],
+  },
+  emptyList: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyListText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: COLORS["content-primary"],
   },
 });
 
@@ -43,7 +53,7 @@ const TransactionList = ({}) => {
         setTransactions(response.data);
       }
     } catch (error) {
-      // handle error
+      showErrorToast();
     } finally {
       setIsLoading(false);
     }
@@ -55,6 +65,23 @@ const TransactionList = ({}) => {
     setRefreshing(false);
   };
 
+  const showErrorToast = () => {
+    Toast.show("Error occured! Please retry", {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.BOTTOM,
+      backgroundColor: COLORS["content-negative"],
+      textStyle: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: COLORS["content-primary"],
+      },
+
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+    });
+  };
+
   useEffect(() => {
     fetchTransactions();
   }, []);
@@ -62,8 +89,8 @@ const TransactionList = ({}) => {
   const renderEmptyList = useMemo(() => {
     if (isLoading) return null;
     return (
-      <View>
-        <Text>No transactions found</Text>
+      <View style={styles.emptyList}>
+        <Text style={styles.emptyListText}>No transactions found</Text>
       </View>
     );
   }, [isLoading]);
