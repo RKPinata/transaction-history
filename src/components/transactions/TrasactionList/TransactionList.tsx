@@ -1,11 +1,11 @@
-import { COLORS } from "@root/constants";
-import { View, Text, StyleSheet, RefreshControl, FlatList } from "react-native";
-import { TransactionListItem } from "./TransactionListItem";
 import { useEffect, useMemo, useState } from "react";
-import { getTransactionHistory } from "@services/transaction";
-import { Transaction } from "@root/models";
+import { View, Text, StyleSheet, RefreshControl, FlatList } from "react-native";
 import Toast from "react-native-root-toast";
 import { Flow } from "react-native-animated-spinkit";
+import { COLORS } from "@root/constants";
+import { getTransactionHistory } from "@services/transaction";
+import { Transaction } from "@root/models";
+import { TransactionListItem } from "../TransactionListItem/TransactionListItem";
 
 const styles = StyleSheet.create({
   listContainer: {
