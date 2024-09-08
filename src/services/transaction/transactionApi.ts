@@ -9,6 +9,7 @@ const simulateDelay = () => {
 };
 
 const simulateError = () => {
+  // error happens 25% of the time
   if (Math.random() < 0.25) {
     throw new Error("Randomized error occurred");
   }
@@ -17,19 +18,13 @@ const simulateError = () => {
 const getTransactionHistory = async () => {
   await simulateDelay();
 
-  try {
-    // simulateError();
-    const response = {
-      data: mockTransactionHistory,
-      error: null,
-    };
-    return response;
-  } catch {
-    return {
-      data: null,
-      error: "An error occurred while fetching transaction history",
-    };
-  }
+  simulateError();
+  const response = {
+    data: mockTransactionHistory,
+    error: null,
+  };
+
+  return response;
 };
 
 export { getTransactionHistory };
